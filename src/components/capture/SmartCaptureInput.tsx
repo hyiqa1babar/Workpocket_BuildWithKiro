@@ -1,5 +1,5 @@
-﻿import React, { useMemo, useState } from 'react';
-import { CreateWorkItemInput, WorkItemType } from '../../types/workItem';
+import React, { useMemo, useState } from 'react';
+import { CreateWorkItemInput, WorkItemType, WorkItemPriority } from '../../types/workItem';
 import { WorkItemDraft } from '../../utils/categorization';
 import {
   createSmartCaptureService,
@@ -109,7 +109,26 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
                 </button>
               </div>
               <div className="flex items-center gap-3 text-[11px] text-slate-400 pl-1">
-                <span className="uppercase tracking-wide">{d.priority}</span>
+                <div className="flex gap-1">
+                  {(['low', 'medium', 'high'] as WorkItemPriority[]).map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => updateDraft(i, { priority: p })}
+                      className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-semibold tracking-wider border transition-all ${
+                        d.priority === p
+                          ? p === 'high'
+                            ? 'bg-rose-500/20 text-rose-300 border-rose-500/50'
+                            : p === 'medium'
+                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/50'
+                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
+                          : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300'
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
                 {d.dueDate && <span>due {formatRelativeDate(d.dueDate)}</span>}
                 {d.tags && d.tags.length > 0 && (
                   <span className="text-sky-400">{d.tags.map((t) => `#${t}`).join(' ')}</span>
@@ -146,13 +165,13 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
           onChange={(e) => setText(e.target.value)}
           autoFocus
           rows={4}
-          placeholder="Dump anything... e.g. Finish OS assignment by Monday and read https://supabase.com/docs — npm install express #dev"
+          placeholder="Dump anything... e.g. Finish OS assignment by Monday and read https://supabase.com/docs â€” npm install express #dev"
           className="w-full bg-slate-950/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 shadow-inner"
         />
         <p className="mt-2 text-[11px] text-slate-500 flex items-center gap-1">
           <Sparkles size={11} className="text-sky-400" />
           {aiEnabled
-            ? 'AI detects type, deadlines, priority and tags — and splits multiple items.'
+            ? 'AI detects type, deadlines, priority and tags â€” and splits multiple items.'
             : 'Local parsing detects type, deadlines and tags. Add a Gemini key for AI splitting.'}
         </p>
       </div>
