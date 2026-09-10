@@ -4,23 +4,64 @@
 
 @layer base {
   body {
-    @apply bg-[#0b0f19] text-slate-100 min-h-screen overflow-x-hidden;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    @apply bg-paper-100 text-ink min-h-screen overflow-x-hidden font-sans;
+    /* Notebook dot-grid on warm paper */
+    background-color: #fdf9ee;
+    background-image: radial-gradient(rgba(43, 42, 51, 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
-  /* Custom scrollbar for modern developer feel */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #d8cdb0;
     border-radius: 9999px;
+    border: 2px solid transparent;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #475569;
+    background: #c3b48a;
+  }
+}
+
+@layer components {
+  /* A card that looks like a taped sticky note / sketchbook card */
+  .sketch-card {
+    @apply bg-paper-50 border-2 border-ink rounded-[14px] shadow-sketch;
+    position: relative;
+  }
+
+  /* Irregular hand-drawn corners */
+  .sketch-edge {
+    border-radius: 255px 12px 225px 15px / 15px 225px 12px 255px;
+  }
+
+  /* Marker highlight behind text */
+  .marker-hi {
+    background-image: linear-gradient(120deg, transparent 0%, rgba(255, 210, 63, 0.7) 0%);
+    background-repeat: no-repeat;
+    background-size: 100% 42%;
+    background-position: 0 88%;
+    padding: 0 2px;
+  }
+
+  .sketch-input {
+    @apply bg-paper-50 border-2 border-ink rounded-[10px] text-ink placeholder-ink-faint
+           focus:outline-none focus:ring-0 focus:border-marker-sky;
+  }
+
+  .tape {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 56px;
+    height: 18px;
+    background: rgba(255, 210, 63, 0.55);
+    border: 1px dashed rgba(43, 42, 51, 0.25);
   }
 }

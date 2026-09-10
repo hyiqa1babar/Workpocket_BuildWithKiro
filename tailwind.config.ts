@@ -1,33 +1,58 @@
-import type { Config } from 'tailwindcss';
+﻿import type { Config } from 'tailwindcss';
 
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          500: '#0284c7',
-          600: '#0369a1',
-          700: '#075985',
+        // Warm paper / notebook tones
+        paper: {
+          50: '#fffdf7',
+          100: '#fdf9ee',
+          200: '#f7f0dd',
+          300: '#ece0c4',
         },
-        surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        }
+        ink: {
+          DEFAULT: '#2b2a33',
+          soft: '#565463',
+          faint: '#8b8896',
+        },
+        // Funky highlighter pops
+        marker: {
+          pink: '#ff5c8a',
+          yellow: '#ffd23f',
+          mint: '#2ec4b6',
+          sky: '#4d96ff',
+          purple: '#9b5de5',
+          orange: '#ff8c42',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        // Hand-drawn headings + notes
+        hand: ['"Patrick Hand"', 'cursive'],
+        marker: ['"Permanent Marker"', 'cursive'],
+        note: ['Kalam', 'cursive'],
+        sans: ['Nunito', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      boxShadow: {
+        sketch: '3px 3px 0 0 rgba(43,42,51,0.9)',
+        'sketch-sm': '2px 2px 0 0 rgba(43,42,51,0.85)',
+        'sketch-color': '3px 3px 0 0 var(--tw-shadow-color)',
+      },
+      keyframes: {
+        wobble: {
+          '0%,100%': { transform: 'rotate(-1deg)' },
+          '50%': { transform: 'rotate(1deg)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(4px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        wobble: 'wobble 0.4s ease-in-out',
+        fadeIn: 'fadeIn 0.25s ease-out',
       },
     },
   },

@@ -79,11 +79,11 @@ export default function App() {
     if (searchQuery.trim()) {
       return (
         <div className="space-y-6">
-          <div className="pb-4 border-b border-slate-800">
-            <h2 className="text-lg font-bold text-white">
+          <div className="pb-4 border-b-2 border-dashed border-ink/30">
+            <h2 className="text-xl font-marker text-ink">
               Search results for "{searchQuery}"
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-sm font-note text-ink-soft mt-1">
               Found {filteredItems.length} matching work items
             </p>
           </div>
@@ -170,13 +170,13 @@ export default function App() {
       case 'file':
         return (
           <div className="space-y-6 animate-fadeIn">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-4 border-b-2 border-dashed border-ink/30">
               <div>
-                <h1 className="text-xl font-bold text-white flex items-center gap-2">
-                  <File size={20} className="text-purple-400" />
+                <h1 className="text-2xl font-marker text-ink flex items-center gap-2">
+                  <File size={20} className="text-marker-pink" />
                   <span>Files & Documents</span>
                 </h1>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-sm font-note text-ink-soft mt-1">
                   Tracked PDFs, syllabi, assets, and project files.
                 </p>
               </div>
@@ -199,32 +199,32 @@ export default function App() {
       case 'settings':
         return (
           <div className="space-y-6 animate-fadeIn max-w-2xl">
-            <div className="pb-4 border-b border-slate-800">
-              <h1 className="text-xl font-bold text-white">WorkPocket Settings</h1>
-              <p className="text-xs text-slate-400 mt-1">
+            <div className="pb-4 border-b-2 border-dashed border-ink/30">
+              <h1 className="text-2xl font-marker text-ink">WorkPocket Settings</h1>
+              <p className="text-sm font-note text-ink-soft mt-1">
                 Data persistence, export options, and command center status.
               </p>
             </div>
 
             <div className="space-y-4">
               {/* Storage Info Card */}
-              <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5">
+              <div className="sketch-card p-5">
                 <div className="flex items-center gap-3 mb-3">
-                  <Database size={18} className="text-sky-400" />
-                  <h3 className="text-sm font-semibold text-white">Local Browser Storage</h3>
+                  <Database size={18} className="text-marker-sky" />
+                  <h3 className="text-base font-hand text-ink">Local Browser Storage</h3>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-sm font-note text-ink-soft leading-relaxed">
                   All work items are stored locally in your browser via localStorage. Zero telemetry, zero external database calls.
                 </p>
-                <div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                  <span className="text-xs text-slate-400">Total WorkItems stored:</span>
-                  <span className="text-xs font-mono font-bold text-sky-400">{items.length} items</span>
+                <div className="mt-4 pt-4 border-t-2 border-dashed border-ink/30 flex items-center justify-between">
+                  <span className="text-sm font-note text-ink-soft">Total items stored:</span>
+                  <span className="text-xs font-mono font-bold text-marker-sky">{items.length} items</span>
                 </div>
               </div>
 
               {/* Data Actions */}
-              <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-white">Data Management</h3>
+              <div className="sketch-card p-5 space-y-4">
+                <h3 className="text-base font-hand text-ink">Data Management</h3>
                 <div className="flex flex-wrap gap-3">
                   <Button
                     variant="secondary"

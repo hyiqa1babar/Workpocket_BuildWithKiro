@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 import { WorkItem, UpdateWorkItemInput } from '../types/workItem';
 import { WorkItemCard } from '../components/items/WorkItemCard';
 import { getGreeting, isDueToday } from '../utils/dateUtils';
-import { AlertCircle, Calendar, Plus, Sparkles, Clock, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, Calendar, Plus, Sparkles, Clock, CheckCircle2, Code2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 interface DashboardProps {
@@ -19,6 +19,17 @@ interface DashboardProps {
   };
 }
 
+const SectionHead: React.FC<{ dot: string; color: string; children: React.ReactNode }> = ({
+  dot,
+  color,
+  children,
+}) => (
+  <div className="flex items-center gap-2">
+    <span className={`w-3 h-3 rounded-full border-2 border-ink ${dot}`} />
+    <h2 className={`text-sm font-marker tracking-wide ${color}`}>{children}</h2>
+  </div>
+);
+
 export const Dashboard: React.FC<DashboardProps> = ({
   items,
   onToggleComplete,
@@ -29,213 +40,151 @@ export const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const greeting = getGreeting();
   const activeItems = items.filter((i) => i.status === 'active');
-
-  // Urgent items
   const urgentItems = activeItems.filter((i) => i.priority === 'high');
-
-  // Tasks due today or upcoming
-  const dueTodayTasks = activeItems.filter(
-    (i) => i.type === 'task' && isDueToday(i.dueDate)
-  );
-
+  const dueTodayTasks = activeItems.filter((i) => i.type === 'task' && isDueToday(i.dueDate));
   const upcomingTasks = activeItems.filter(
     (i) => i.type === 'task' && i.priority !== 'high' && !isDueToday(i.dueDate)
   );
-
-  // Recent code/links/notes
   const recentSnippets = activeItems.filter((i) => i.type === 'code');
   const recentOthers = activeItems.filter((i) => i.type !== 'task' && i.type !== 'code');
 
+  const metrics = [
+    { label: 'Active', value: stats.activeCount, icon: Sparkles, bg: 'bg-marker-sky/15', color: 'text-marker-sky' },
+    { label: 'Urgent', value: stats.urgentCount, icon: AlertCircle, bg: 'bg-marker-pink/15', color: 'text-marker-pink' },
+    { label: 'Due Today', value: stats.dueTodayCount, icon: Calendar, bg: 'bg-marker-orange/15', color: 'text-marker-orange' },
+    {
+      label: 'Done',
+      value: items.filter((i) => i.status === 'completed').length,
+      icon: CheckCircle2,
+      bg: 'bg-marker-mint/15',
+      color: 'text-marker-mint',
+    },
+  ];
+
   return (
     <div className="space-y-8 animate-fadeIn">
-      {/* Top Banner / Welcome */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+      {/* Welcome banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b-2 border-dashed border-ink/30">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <span>{greeting}</span>
-            <span className="text-2xl">👋</span>
+          <h1 className="text-3xl font-marker tracking-tight text-ink">
+            <span className="marker-hi">{greeting}!</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm font-note text-ink-soft mt-2">
             {stats.activeCount === 0 ? (
-              <span className="text-emerald-400 font-medium">You're all caught up! Zero pending items.</span>
+              <span className="text-marker-mint font-bold">You're all caught up. Nothing pending!</span>
             ) : (
               <>
-                You have <span className="text-sky-400 font-semibold">{stats.activeCount} things</span> to handle today
+                You have <span className="text-marker-sky font-bold">{stats.activeCount} things</span> to handle today
                 {stats.urgentCount > 0 && (
-                  <span className="text-rose-400 ml-1">({stats.urgentCount} marked urgent)</span>
+                  <span className="text-marker-pink ml-1 font-bold">({stats.urgentCount} urgent)</span>
                 )}
               </>
             )}
           </p>
         </div>
-
-        <div className="flex items-center gap-2">
-          <Button onClick={onOpenCapture} size="sm" icon={<Plus size={15} />}>
-            Capture Item
-          </Button>
-        </div>
+        <Button onClick={onOpenCapture} size="sm" icon={<Plus size={15} strokeWidth={3} />}>
+          Capture Item
+        </Button>
       </div>
 
-      {/* Metrics Snapshot */}
+      {/* Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
-            <span>Active Items</span>
-            <Sparkles size={14} className="text-sky-400" />
-          </div>
-          <div className="text-2xl font-bold text-slate-100 mt-1">{stats.activeCount}</div>
-        </div>
-
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
-            <span>Urgent</span>
-            <AlertCircle size={14} className="text-rose-400" />
-          </div>
-          <div className="text-2xl font-bold text-rose-400 mt-1">{stats.urgentCount}</div>
-        </div>
-
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
-            <span>Due Today</span>
-            <Calendar size={14} className="text-amber-400" />
-          </div>
-          <div className="text-2xl font-bold text-amber-400 mt-1">{stats.dueTodayCount}</div>
-        </div>
-
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
-            <span>Completed</span>
-            <CheckCircle2 size={14} className="text-emerald-400" />
-          </div>
-          <div className="text-2xl font-bold text-emerald-400 mt-1">
-            {items.filter((i) => i.status === 'completed').length}
-          </div>
-        </div>
+        {metrics.map((m, i) => {
+          const Icon = m.icon;
+          return (
+            <div
+              key={m.label}
+              className={`sketch-card p-3.5 ${i % 2 === 0 ? '-rotate-1' : 'rotate-1'} hover:rotate-0 transition-transform`}
+            >
+              <div className="flex items-center justify-between text-ink-soft text-[13px] font-hand">
+                <span>{m.label}</span>
+                <span className={`w-6 h-6 rounded-md flex items-center justify-center ${m.bg} ${m.color}`}>
+                  <Icon size={13} />
+                </span>
+              </div>
+              <div className={`text-3xl font-marker mt-1 ${m.color}`}>{m.value}</div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Main Section matching the mockup visual structure */}
+      {/* Sections */}
       <div className="space-y-6">
-        {/* 🔴 URGENT SECTION */}
         {urgentItems.length > 0 && (
           <section className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-              <h2 className="text-xs font-bold uppercase tracking-wider text-rose-400 font-mono">
-                Urgent Priority ({urgentItems.length})
-              </h2>
-            </div>
-            <div className="space-y-2.5">
+            <SectionHead dot="bg-marker-pink" color="text-marker-pink">
+              Urgent ({urgentItems.length})
+            </SectionHead>
+            <div className="space-y-3">
               {urgentItems.map((item) => (
-                <WorkItemCard
-                  key={item.id}
-                  item={item}
-                  onToggleComplete={onToggleComplete}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
+                <WorkItemCard key={item.id} item={item} onToggleComplete={onToggleComplete} onDelete={onDelete} onUpdate={onUpdate} />
               ))}
             </div>
           </section>
         )}
 
-        {/* 📅 DUE TODAY (if not already high priority) */}
         {dueTodayTasks.filter((t) => t.priority !== 'high').length > 0 && (
           <section className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-              <h2 className="text-xs font-bold uppercase tracking-wider text-amber-400 font-mono">
-                Due Today
-              </h2>
-            </div>
-            <div className="space-y-2.5">
-              {dueTodayTasks
-                .filter((t) => t.priority !== 'high')
-                .map((item) => (
-                  <WorkItemCard
-                    key={item.id}
-                    item={item}
-                    onToggleComplete={onToggleComplete}
-                    onDelete={onDelete}
-                    onUpdate={onUpdate}
-                  />
-                ))}
-            </div>
-          </section>
-        )}
-
-        {/* 🟡 UPCOMING TASKS */}
-        {upcomingTasks.length > 0 && (
-          <section className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-              <h2 className="text-xs font-bold uppercase tracking-wider text-yellow-400 font-mono">
-                Upcoming ({upcomingTasks.length})
-              </h2>
-            </div>
-            <div className="space-y-2.5">
-              {upcomingTasks.slice(0, 3).map((item) => (
-                <WorkItemCard
-                  key={item.id}
-                  item={item}
-                  onToggleComplete={onToggleComplete}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
+            <SectionHead dot="bg-marker-orange" color="text-marker-orange">
+              Due Today
+            </SectionHead>
+            <div className="space-y-3">
+              {dueTodayTasks.filter((t) => t.priority !== 'high').map((item) => (
+                <WorkItemCard key={item.id} item={item} onToggleComplete={onToggleComplete} onDelete={onDelete} onUpdate={onUpdate} />
               ))}
             </div>
           </section>
         )}
 
-        {/* 💻 CODE SNIPPETS & RECENT WORK */}
+        {upcomingTasks.length > 0 && (
+          <section className="space-y-3">
+            <SectionHead dot="bg-marker-yellow" color="text-ink">
+              Upcoming ({upcomingTasks.length})
+            </SectionHead>
+            <div className="space-y-3">
+              {upcomingTasks.slice(0, 3).map((item) => (
+                <WorkItemCard key={item.id} item={item} onToggleComplete={onToggleComplete} onDelete={onDelete} onUpdate={onUpdate} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {recentSnippets.length > 0 && (
           <section className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="text-indigo-400 font-mono text-xs font-bold">💻</span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-indigo-400 font-mono">
+              <Code2 size={16} className="text-marker-purple" strokeWidth={2.4} />
+              <h2 className="text-sm font-marker tracking-wide text-marker-purple">
                 Code & Commands ({recentSnippets.length})
               </h2>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {recentSnippets.slice(0, 2).map((item) => (
-                <WorkItemCard
-                  key={item.id}
-                  item={item}
-                  onToggleComplete={onToggleComplete}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
+                <WorkItemCard key={item.id} item={item} onToggleComplete={onToggleComplete} onDelete={onDelete} onUpdate={onUpdate} />
               ))}
             </div>
           </section>
         )}
 
-        {/* Recently captured items */}
         {recentOthers.length > 0 && (
           <section className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-400 font-mono text-xs font-bold uppercase tracking-wider">
-              <Clock size={13} />
-              <span>Other Recent Notes & References</span>
+            <div className="flex items-center gap-2 text-ink-soft font-marker text-sm tracking-wide">
+              <Clock size={15} />
+              <span>Recent Notes & References</span>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {recentOthers.slice(0, 3).map((item) => (
-                <WorkItemCard
-                  key={item.id}
-                  item={item}
-                  onToggleComplete={onToggleComplete}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
+                <WorkItemCard key={item.id} item={item} onToggleComplete={onToggleComplete} onDelete={onDelete} onUpdate={onUpdate} />
               ))}
             </div>
           </section>
         )}
 
         {activeItems.length === 0 && (
-          <div className="text-center py-12 border border-slate-800 rounded-2xl bg-slate-900/30">
-            <CheckCircle2 size={40} className="mx-auto text-emerald-400 mb-3" />
-            <h3 className="text-base font-semibold text-slate-100">All caught up!</h3>
-            <p className="text-sm text-slate-400 mt-1 max-w-sm mx-auto">
-              You have no active tasks or items in your command center.
+          <div className="text-center py-12 sketch-card">
+            <CheckCircle2 size={44} className="mx-auto text-marker-mint mb-3" />
+            <h3 className="text-lg font-hand text-ink">All caught up!</h3>
+            <p className="text-sm font-note text-ink-soft mt-1 max-w-sm mx-auto">
+              No active items in your pocket. Time to capture something.
             </p>
             <div className="mt-4">
               <Button onClick={onOpenCapture} size="sm">

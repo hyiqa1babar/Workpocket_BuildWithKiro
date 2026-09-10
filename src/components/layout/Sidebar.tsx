@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   LayoutDashboard,
   Inbox,
@@ -39,74 +39,79 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'dashboard' as PageView,
       label: 'Today',
       icon: LayoutDashboard,
+      accent: 'text-marker-pink',
       badge: stats.urgentCount > 0 ? `${stats.urgentCount} urgent` : undefined,
-      badgeColor: 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
+      badgeColor: 'bg-marker-pink text-white',
     },
     {
       id: 'inbox' as PageView,
       label: 'Inbox',
       icon: Inbox,
+      accent: 'text-ink',
       badge: stats.activeCount > 0 ? `${stats.activeCount}` : undefined,
-      badgeColor: 'bg-slate-800 text-slate-300',
+      badgeColor: 'bg-ink text-paper-50',
     },
     {
       id: 'task' as PageView,
       label: 'Tasks',
       icon: CheckSquare,
+      accent: 'text-marker-mint',
       badge: stats.countByType.task > 0 ? `${stats.countByType.task}` : undefined,
-      badgeColor: 'bg-emerald-500/10 text-emerald-400',
+      badgeColor: 'bg-marker-mint text-white',
     },
     {
       id: 'note' as PageView,
       label: 'Notes',
       icon: FileText,
+      accent: 'text-marker-orange',
       badge: stats.countByType.note > 0 ? `${stats.countByType.note}` : undefined,
-      badgeColor: 'bg-amber-500/10 text-amber-400',
+      badgeColor: 'bg-marker-orange text-white',
     },
     {
       id: 'link' as PageView,
       label: 'Links',
       icon: Link2,
+      accent: 'text-marker-sky',
       badge: stats.countByType.link > 0 ? `${stats.countByType.link}` : undefined,
-      badgeColor: 'bg-sky-500/10 text-sky-400',
+      badgeColor: 'bg-marker-sky text-white',
     },
     {
       id: 'code' as PageView,
       label: 'Code',
       icon: Code2,
+      accent: 'text-marker-purple',
       badge: stats.countByType.code > 0 ? `${stats.countByType.code}` : undefined,
-      badgeColor: 'bg-indigo-500/10 text-indigo-400',
+      badgeColor: 'bg-marker-purple text-white',
     },
   ];
 
   return (
-    <aside className="w-64 bg-[#090d16] border-r border-slate-800/80 flex flex-col shrink-0 h-screen sticky top-0">
+    <aside className="w-64 bg-paper-50 border-r-2 border-ink flex flex-col shrink-0 h-screen sticky top-0">
       {/* Brand Header */}
-      <div className="h-16 px-5 border-b border-slate-800/80 flex items-center justify-between">
+      <div className="h-16 px-5 border-b-2 border-dashed border-ink/30 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-600 to-cyan-400 flex items-center justify-center font-bold text-white text-base shadow-sm shadow-sky-500/20">
+          <div className="w-9 h-9 sketch-edge bg-marker-yellow border-2 border-ink flex items-center justify-center font-marker text-ink text-sm -rotate-3">
             WP
           </div>
           <div>
-            <span className="font-bold tracking-tight text-slate-100 text-sm">WORKPOCKET</span>
-            <span className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest">command center</span>
+            <span className="font-marker tracking-tight text-ink text-base leading-none">WorkPocket</span>
+            <span className="block text-[10px] font-note text-ink-soft">your work, one pocket</span>
           </div>
         </div>
 
-        {/* Quick + capture button */}
         <button
           onClick={onOpenCapture}
-          className="w-7 h-7 rounded-lg bg-sky-500 hover:bg-sky-400 text-white flex items-center justify-center transition-transform active:scale-95 shadow-sm shadow-sky-500/30"
-          title="Capture item (shortcut: C or Ctrl+N)"
+          className="w-8 h-8 sketch-edge bg-marker-pink hover:bg-marker-pink/90 text-white flex items-center justify-center transition-transform active:scale-90 border-2 border-ink shadow-sketch-sm"
+          title="Capture item (shortcut: C)"
         >
-          <Plus size={16} strokeWidth={2.5} />
+          <Plus size={16} strokeWidth={3} />
         </button>
       </div>
 
       {/* Navigation List */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">
-          Views
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1.5">
+        <div className="text-[11px] font-note font-bold text-ink-soft px-3 mb-2">
+          my notebook
         </div>
 
         {navItems.map((item) => {
@@ -117,18 +122,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-[10px] text-sm font-hand transition-all border-2 ${
                 isActive
-                  ? 'bg-slate-800/90 text-white shadow-sm border border-slate-700/60'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                  ? 'bg-paper-200 text-ink border-ink shadow-sketch-sm -rotate-1'
+                  : 'text-ink-soft border-transparent hover:border-ink/30 hover:bg-paper-100'
               }`}
             >
               <div className="flex items-center gap-2.5">
-                <Icon size={16} className={isActive ? 'text-sky-400' : 'text-slate-400'} />
-                <span>{item.label}</span>
+                <Icon size={17} className={item.accent} strokeWidth={2.2} />
+                <span className="text-[15px]">{item.label}</span>
               </div>
               {item.badge && (
-                <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>
+                <span className={`text-[10px] font-sans font-bold px-1.5 py-0.5 rounded-full border border-ink/20 ${item.badgeColor}`}>
                   {item.badge}
                 </span>
               )}
@@ -138,24 +143,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Controls */}
-      <div className="p-3 border-t border-slate-800/80 space-y-1">
+      <div className="p-3 border-t-2 border-dashed border-ink/30 space-y-1">
         <button
           onClick={onResetData}
-          className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-slate-400 hover:text-slate-200 hover:bg-slate-900/80 rounded-lg transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-1.5 text-sm font-hand text-ink-soft hover:text-ink hover:bg-paper-100 rounded-[10px] transition-colors"
           title="Reset to sample data"
         >
-          <RotateCcw size={14} />
-          <span>Reset Sample Data</span>
+          <RotateCcw size={15} strokeWidth={2.2} />
+          <span>Reset Samples</span>
         </button>
         <button
           onClick={() => onNavigate('settings')}
-          className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs rounded-lg transition-colors ${
+          className={`w-full flex items-center gap-2 px-3 py-1.5 text-sm font-hand rounded-[10px] transition-colors border-2 ${
             currentView === 'settings'
-              ? 'bg-slate-800 text-white'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/80'
+              ? 'bg-paper-200 text-ink border-ink shadow-sketch-sm'
+              : 'text-ink-soft border-transparent hover:text-ink hover:bg-paper-100'
           }`}
         >
-          <Settings size={14} />
+          <Settings size={15} strokeWidth={2.2} />
           <span>Settings</span>
         </button>
       </div>

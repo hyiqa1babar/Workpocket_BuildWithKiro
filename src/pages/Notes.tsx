@@ -23,13 +23,13 @@ export const Notes: React.FC<NotesProps> = ({
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800/80">
+      <div className="flex items-center justify-between pb-4 border-b-2 border-dashed border-ink/30">
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <FileText size={20} className="text-amber-400" />
+          <h1 className="text-2xl font-marker text-ink flex items-center gap-2">
+            <FileText size={20} className="text-marker-orange" />
             <span>Notes</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-sm font-note text-ink-soft mt-1">
             Thoughts, references, system design takeaways, and meeting notes.
           </p>
         </div>

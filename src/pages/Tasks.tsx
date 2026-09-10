@@ -32,13 +32,13 @@ export const Tasks: React.FC<TasksProps> = ({
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-dashed border-ink/30">
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <CheckSquare size={20} className="text-emerald-400" />
+          <h1 className="text-2xl font-marker text-ink flex items-center gap-2">
+            <CheckSquare size={20} className="text-marker-mint" />
             <span>Tasks</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-sm font-note text-ink-soft mt-1">
             Actionable work items with priorities and due dates.
           </p>
         </div>
@@ -49,15 +49,15 @@ export const Tasks: React.FC<TasksProps> = ({
 
       {/* Filter Tabs */}
       <div className="flex items-center justify-between gap-2 flex-wrap text-xs">
-        <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-lg">
+        <div className="flex items-center gap-1 bg-paper-50 border-2 border-ink p-1 rounded-[10px] shadow-sketch-sm">
           {(['pending', 'completed', 'all'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setStatusTab(tab)}
               className={`px-3 py-1 rounded capitalize font-medium transition-colors ${
                 statusTab === tab
-                  ? 'bg-slate-800 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-marker-yellow text-ink'
+                  : 'text-ink-soft hover:text-ink'
               }`}
             >
               {tab}
@@ -66,17 +66,17 @@ export const Tasks: React.FC<TasksProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <Filter size={13} className="text-slate-500" />
-          <span className="text-slate-400 text-xs">Priority:</span>
-          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-lg">
+          <Filter size={13} className="text-ink-faint" />
+          <span className="text-ink-soft text-xs font-hand">Priority:</span>
+          <div className="flex items-center gap-1 bg-paper-50 border-2 border-ink p-1 rounded-[10px] shadow-sketch-sm">
             {(['all', 'high', 'medium', 'low'] as const).map((p) => (
               <button
                 key={p}
                 onClick={() => setPriorityFilter(p)}
                 className={`px-2 py-0.5 rounded capitalize text-[11px] font-medium transition-colors ${
                   priorityFilter === p
-                    ? 'bg-slate-800 text-sky-400 font-semibold shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-marker-yellow text-ink font-bold'
+                    : 'text-ink-soft hover:text-ink'
                 }`}
               >
                 {p}

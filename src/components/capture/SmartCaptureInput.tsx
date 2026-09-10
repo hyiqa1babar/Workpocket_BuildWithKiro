@@ -60,17 +60,17 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-xs">
             {source === 'ai' ? (
-              <span className="flex items-center gap-1 text-sky-400 font-medium">
+              <span className="flex items-center gap-1 text-marker-sky font-bold">
                 <Sparkles size={13} /> Parsed by AI
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-amber-400 font-medium">
+              <span className="flex items-center gap-1 text-marker-orange font-bold">
                 <Cpu size={13} /> Parsed locally
                 {fallbackReason && fallbackReason !== 'no-key' ? ' (AI unavailable)' : ''}
               </span>
             )}
           </div>
-          <span className="text-[11px] text-slate-500">
+          <span className="text-[11px] font-note text-ink-faint">
             {drafts.length} item{drafts.length !== 1 ? 's' : ''} detected
           </span>
         </div>
@@ -79,13 +79,13 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
           {drafts.map((d, i) => (
             <div
               key={i}
-              className="bg-slate-950/60 border border-slate-800 rounded-xl p-3 space-y-2"
+              className="sketch-card p-3 space-y-2"
             >
               <div className="flex items-center gap-2">
                 <select
                   value={d.type}
                   onChange={(e) => updateDraft(i, { type: e.target.value as WorkItemType })}
-                  className="bg-slate-900 border border-slate-800 rounded px-2 py-1 text-[11px] text-slate-200 focus:outline-none focus:border-sky-500"
+                  className="sketch-input px-2 py-1 text-[11px] font-hand"
                 >
                   {TYPES.map((t) => (
                     <option key={t} value={t}>
@@ -97,18 +97,18 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
                 <input
                   value={d.title}
                   onChange={(e) => updateDraft(i, { title: e.target.value })}
-                  className="flex-1 bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+                  className="flex-1 sketch-input px-2 py-1 text-xs font-hand"
                 />
                 <button
                   type="button"
                   onClick={() => removeDraft(i)}
-                  className="text-slate-500 hover:text-rose-400 transition-colors"
+                  className="text-ink-faint hover:text-marker-pink transition-colors"
                   aria-label="Remove item"
                 >
                   <Trash2 size={14} />
                 </button>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-slate-400 pl-1">
+              <div className="flex items-center gap-3 text-[11px] font-note text-ink-soft pl-1">
                 <div className="flex gap-1">
                   {(['low', 'medium', 'high'] as WorkItemPriority[]).map((p) => (
                     <button
@@ -118,11 +118,11 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
                       className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-semibold tracking-wider border transition-all ${
                         d.priority === p
                           ? p === 'high'
-                            ? 'bg-rose-500/20 text-rose-300 border-rose-500/50'
+                            ? 'bg-marker-pink/20 text-marker-pink border-marker-pink/50'
                             : p === 'medium'
-                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/50'
-                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
-                          : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-slate-300'
+                            ? 'bg-marker-orange/20 text-marker-orange border-marker-orange/50'
+                            : 'bg-marker-mint/20 text-marker-mint border-marker-mint/50'
+                          : 'bg-paper-100 border-ink/30 text-ink-faint hover:text-ink'
                       }`}
                     >
                       {p}
@@ -131,14 +131,14 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
                 </div>
                 {d.dueDate && <span>due {formatRelativeDate(d.dueDate)}</span>}
                 {d.tags && d.tags.length > 0 && (
-                  <span className="text-sky-400">{d.tags.map((t) => `#${t}`).join(' ')}</span>
+                  <span className="text-marker-sky">{d.tags.map((t) => `#${t}`).join(' ')}</span>
                 )}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800/80">
+        <div className="flex items-center justify-end gap-2 pt-2 border-t-2 border-dashed border-ink/30">
           <Button type="button" variant="ghost" onClick={() => setDrafts(null)}>
             Back
           </Button>
@@ -165,18 +165,18 @@ export const SmartCaptureInput: React.FC<SmartCaptureInputProps> = ({ onSave, on
           onChange={(e) => setText(e.target.value)}
           autoFocus
           rows={4}
-          placeholder="Dump anything... e.g. Finish OS assignment by Monday and read https://supabase.com/docs â€” npm install express #dev"
-          className="w-full bg-slate-950/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 shadow-inner"
+          placeholder="Dump anything... e.g. Finish OS assignment by Monday and read https://supabase.com/docs ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â npm install express #dev"
+          className="w-full sketch-input px-4 py-3 text-sm font-hand"
         />
-        <p className="mt-2 text-[11px] text-slate-500 flex items-center gap-1">
-          <Sparkles size={11} className="text-sky-400" />
+        <p className="mt-2 text-[11px] font-note text-ink-faint flex items-center gap-1">
+          <Sparkles size={11} className="text-marker-sky" />
           {aiEnabled
-            ? 'AI detects type, deadlines, priority and tags â€” and splits multiple items.'
+            ? 'AI detects type, deadlines, priority and tags ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â and splits multiple items.'
             : 'Local parsing detects type, deadlines and tags. Add a Gemini key for AI splitting.'}
         </p>
       </div>
 
-      <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800/80">
+      <div className="flex items-center justify-end gap-2 pt-2 border-t-2 border-dashed border-ink/30">
         {onCancel && (
           <Button type="button" variant="ghost" onClick={onCancel}>
             Cancel

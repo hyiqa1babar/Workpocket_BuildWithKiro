@@ -39,7 +39,7 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm animate-fadeIn">
       <div
         ref={overlayRef}
         onClick={(e) => {
@@ -48,14 +48,14 @@ export const Modal: React.FC<ModalProps> = ({
         className="fixed inset-0"
       />
       <div
-        className={`relative w-full ${maxWidths[maxWidth]} bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden z-10 animate-scaleUp`}
+        className={`relative w-full ${maxWidths[maxWidth]} sketch-card overflow-hidden z-10 animate-fadeIn -rotate-[0.5deg]`}
       >
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-            <h3 className="text-base font-semibold text-slate-100">{title}</h3>
+          <div className="flex items-center justify-between px-6 py-4 border-b-2 border-dashed border-ink/30">
+            <h3 className="text-lg font-hand text-ink">{title}</h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-800"
+              className="text-ink-soft hover:text-marker-pink transition-colors p-1 rounded-md hover:bg-paper-200"
               aria-label="Close modal"
             >
               <X size={18} />

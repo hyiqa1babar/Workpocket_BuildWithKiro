@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { CaptureInput } from './CaptureInput';
 import { SmartCaptureInput } from './SmartCaptureInput';
@@ -38,20 +38,20 @@ export const CaptureModal: React.FC<CaptureModalProps> = ({
       onClose={onClose}
       maxWidth="lg"
       title={
-        <div className="flex items-center gap-2 text-slate-100">
-          <PlusCircle size={18} className="text-sky-400" />
+        <div className="flex items-center gap-2 text-ink font-hand">
+          <PlusCircle size={18} className="text-marker-sky" />
           <span>Capture something</span>
         </div>
       }
     >
-      <div className="mb-4 flex items-center gap-1.5 p-1 bg-slate-950/80 border border-slate-800 rounded-xl">
+      <div className="mb-4 flex items-center gap-1.5 p-1 bg-paper-200 border-2 border-ink rounded-[10px]">
         <button
           type="button"
           onClick={() => setMode('smart')}
           className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-all ${
             mode === 'smart'
-              ? 'bg-slate-800 text-white shadow-sm border border-slate-700/80'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+              ? 'bg-marker-yellow text-ink border-2 border-ink'
+              : 'text-ink-soft hover:text-ink hover:bg-paper-100'
           }`}
         >
           <Sparkles size={14} /> Smart Capture
@@ -61,8 +61,8 @@ export const CaptureModal: React.FC<CaptureModalProps> = ({
           onClick={() => setMode('manual')}
           className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-medium transition-all ${
             mode === 'manual'
-              ? 'bg-slate-800 text-white shadow-sm border border-slate-700/80'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+              ? 'bg-marker-yellow text-ink border-2 border-ink'
+              : 'text-ink-soft hover:text-ink hover:bg-paper-100'
           }`}
         >
           <Pencil size={14} /> Manual

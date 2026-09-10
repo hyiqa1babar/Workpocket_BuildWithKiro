@@ -120,10 +120,10 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
             onChange={handleTitleChange}
             placeholder={getPlaceholder()}
             autoFocus
-            className="w-full bg-slate-950/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 shadow-inner"
+            className="w-full sketch-input px-4 py-3 text-sm font-hand"
           />
           {!hasManuallySelectedType && title.length > 2 && (
-            <div className="absolute right-3 top-3 flex items-center gap-1 text-[11px] text-sky-400 font-mono pointer-events-none bg-slate-900/90 px-1.5 py-0.5 rounded border border-sky-500/30">
+            <div className="absolute right-3 top-3 flex items-center gap-1 text-[11px] text-ink font-note pointer-events-none bg-marker-yellow/70 px-1.5 py-0.5 rounded border border-ink/30">
               <Sparkles size={11} />
               auto-detected
             </div>
@@ -144,7 +144,7 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
               ? 'https://example.com/useful-article'
               : 'Add details, description, or notes (optional)...'
           }
-          className={`w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors ${
+          className={`w-full sketch-input px-4 py-2.5 text-xs font-note transition-colors ${
             type === 'code' ? 'font-mono' : ''
           }`}
         />
@@ -155,17 +155,17 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
         <button
           type="button"
           onClick={() => setShowOptions(!showOptions)}
-          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition-colors"
+          className="flex items-center gap-1.5 text-[13px] font-hand text-ink-soft hover:text-ink transition-colors"
         >
           {showOptions ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
           <span>{showOptions ? 'Fewer options' : 'More options (priority, due date, tags)'}</span>
         </button>
 
         {showOptions && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 p-3 bg-slate-950/40 border border-slate-800/80 rounded-xl mt-2 animate-fadeIn">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 p-3 bg-paper-100 border-2 border-dashed border-ink/30 rounded-[12px] mt-2 animate-fadeIn">
             {/* Priority */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1">
+              <label className="block text-[12px] font-hand text-ink-soft mb-1">
                 Priority
               </label>
               <div className="flex gap-1">
@@ -177,11 +177,11 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
                     className={`flex-1 py-1 text-xs rounded uppercase font-semibold tracking-wider border transition-all ${
                       priority === p
                         ? p === 'high'
-                          ? 'bg-rose-500/20 text-rose-300 border-rose-500/50'
+                          ? 'bg-marker-pink/20 text-marker-pink border-marker-pink/50'
                           : p === 'medium'
-                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/50'
-                          : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
+                          ? 'bg-marker-orange/20 text-marker-orange border-marker-orange/50'
+                          : 'bg-marker-mint/20 text-marker-mint border-marker-mint/50'
+                        : 'bg-paper-50 border-ink/30 text-ink-soft hover:bg-paper-200'
                     }`}
                   >
                     {p}
@@ -192,20 +192,20 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
 
             {/* Due Date */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+              <label className="block text-[12px] font-hand text-ink-soft mb-1 flex items-center gap-1">
                 <Calendar size={12} /> Due Date
               </label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-800 rounded px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                className="w-full sketch-input px-2.5 py-1 text-xs font-hand"
               />
             </div>
 
             {/* Tags */}
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+              <label className="block text-[12px] font-hand text-ink-soft mb-1 flex items-center gap-1">
                 <Tag size={12} /> Tags (comma separated)
               </label>
               <input
@@ -213,7 +213,7 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 placeholder="dev, urgent, study"
-                className="w-full bg-slate-900 border border-slate-800 rounded px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                className="w-full sketch-input px-2.5 py-1 text-xs font-hand"
               />
             </div>
           </div>
@@ -221,7 +221,7 @@ export const CaptureInput: React.FC<CaptureInputProps> = ({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800/80">
+      <div className="flex items-center justify-end gap-2 pt-2 border-t-2 border-dashed border-ink/30">
         {isModal && onCancel && (
           <Button type="button" variant="ghost" onClick={onCancel}>
             Cancel
